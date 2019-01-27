@@ -1,4 +1,5 @@
 import React from 'react';
+import { userService } from '../service/user.service';
 
 export class LoginPage extends React.Component {
     constructor(props) {
@@ -15,14 +16,18 @@ export class LoginPage extends React.Component {
     }
 
     handleChange(e) {
-        console.log(e);
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ submitted: true });
         console.log('submitted');
+        userService.getUsers((resp) => {
+            console.log(resp);
+        })
+
     }
 
     render() {
