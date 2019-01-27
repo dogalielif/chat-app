@@ -1,7 +1,9 @@
 import React from 'react';
-import { userService } from '../service/user.service';
+import { connect } from 'react-redux';
 
-export class LoginPage extends React.Component {
+import { userActions } from '../actions';
+
+class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -22,15 +24,18 @@ export class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+
         this.setState({ submitted: true });
-        console.log('submitted');
-        userService.getUsers((resp) => {
-            console.log(resp);
-        })
+        const { username, password } = this.state;
+        const { dispatch } = this.props;
+        if (username && password) {
+            dispatch(userActions.login(username, password));
+        }
 
     }
 
     render() {
+        const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
@@ -52,6 +57,7 @@ export class LoginPage extends React.Component {
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary login-button">Login</button>
+                        {loggingIn}
                     </div>
                 </form>
             </div>
@@ -59,3 +65,13 @@ export class LoginPage extends React.Component {
     }
 }
 
+
+function mapStateToProps(state) {
+    const { loggingIn } = state.authentication;
+    return {
+        loggingIn
+    };
+}
+
+const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+export { connectedLoginPage as LoginPage }; 
