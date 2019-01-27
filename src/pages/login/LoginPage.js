@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { userActions } from '../actions';
+import { loginActions } from '../../actions';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
         const { username, password } = this.state;
         const { dispatch } = this.props;
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            dispatch(loginActions.login(username, password));
         }
 
     }

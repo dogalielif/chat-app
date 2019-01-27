@@ -8,7 +8,7 @@ import { store } from './helpers';
 import * as serviceWorker from "./serviceWorker";
 
 //IIFE
-(function() {
+void function() {
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -33,7 +33,7 @@ import * as serviceWorker from "./serviceWorker";
             }, 500);
         });
     }
-})()
+}()
 
 ReactDOM.render(
     <Provider store={store}>
